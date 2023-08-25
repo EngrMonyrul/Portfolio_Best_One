@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'dart:ui';
+import 'package:provider/provider.dart';
+import 'package:untitled2/control/providers/index_provider.dart';
+import 'package:untitled2/view/home%20screen/home_screen.dart';
+import 'package:untitled2/view/splash%20screen/splash_screen.dart';
+import 'control/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ void main() async {
         measurementId: "G-102CN0CFJD"
     ),
   );
+
   runApp(const MyApp());
 }
 
@@ -26,44 +28,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  Future<Widget> _getImageWidget() async {
-    final Reference ref = FirebaseStorage.instance.ref().child('bgimg').child('wallpaperflare.com_wallpaper (1).jpg');
-    final String url = await ref.getDownloadURL();
-
-    return Image(
-      image: CachedNetworkImageProvider(url),
-      fit: BoxFit.contain,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<Widget>(
-        future: _getImageWidget(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return snapshot.data ?? Text('Image not available');
-          }
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => IndexProvider()),
+      ],
+      child: Builder(
+        builder: (context) {
+          final theme = Provider.of<ThemeProvider>(context);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: theme.themeMode,
+            darkTheme: ThemeData.dark(),
+            theme: ThemeData(
+              fontFamily: 'playfair',
+            ),
+            home: const SplashScreen(),
+          );
         },
       ),
     );
