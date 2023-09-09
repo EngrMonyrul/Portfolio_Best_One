@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled2/control/providers/index_provider.dart';
-import 'package:untitled2/view/home%20screen/home_screen.dart';
-import 'package:untitled2/view/splash%20screen/splash_screen.dart';
-import 'control/providers/theme_provider.dart';
+import 'package:untitled2/control/providers/database_provider.dart';
+import 'package:untitled2/view/splashScreen/splash_screen_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,22 +28,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => IndexProvider()),
+        ChangeNotifierProvider(create: (_)=> DataBaseProvider()),
       ],
-      child: Builder(
-        builder: (context) {
-          final theme = Provider.of<ThemeProvider>(context);
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            themeMode: theme.themeMode,
-            darkTheme: ThemeData.dark(),
-            theme: ThemeData(
-              fontFamily: 'playfair',
-            ),
-            home: const SplashScreen(),
-          );
-        },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.light(),
+        theme: ThemeData(
+          fontFamily: 'playfair',
+        ),
+        home: SplashScreenView(),
       ),
     );
   }

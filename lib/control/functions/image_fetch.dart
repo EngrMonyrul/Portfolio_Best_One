@@ -2,33 +2,38 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class ImageFetch {
 
-  Future<List<String>> fetchBgImg() async {
+  List<String> bgImgs = [];
+  String downloadUrl = '';
+  List<String> splashImgs = [];
+  List<String> profileImgs = [];
+
+  Future<void> fetchBgImg() async {
     final ListResult result =
         await FirebaseStorage.instance.ref().child('bgimg').listAll();
     List<String> bgImg = result.items.map((e) => e.fullPath).toList();
 
-    return bgImg;
+    bgImgs = bgImg;
   }
 
-  Future<String> fetchLoadingImg() async {
+  Future<void> fetchLoadingImg() async {
     final Reference ref = FirebaseStorage.instance.ref().child('icons/loading.gif');
 
-    return ref.getDownloadURL();
+    downloadUrl = await ref.getDownloadURL();
   }
 
-  Future<List<String>> fetchSplashImg() async {
+  Future<void> fetchSplashImg() async {
     final ListResult result =
     await FirebaseStorage.instance.ref().child('splashimg').listAll();
     List<String> bgImg = result.items.map((e) => e.fullPath).toList();
 
-    return bgImg;
+    splashImgs = bgImg;
   }
 
-  Future<List<String>> fetchProfileImg() async {
+  Future<void> fetchProfileImg() async {
     final ListResult result =
     await FirebaseStorage.instance.ref().child('profile').listAll();
     List<String> bgImg = result.items.map((e) => e.fullPath).toList();
 
-    return bgImg;
+    profileImgs = bgImg;
   }
 }
