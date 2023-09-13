@@ -4,6 +4,7 @@ class Assets {
 
   static const String fontsPlayfairDisplayRegular = 'assets/fonts/PlayfairDisplay-Regular.ttf';
   static const String iconsAnimationLmbpchdd = 'assets/icons/animation_lmbpchdd.json';
+  static const String iconsAnimationLmhjlzz2 = 'assets/icons/animation_lmhjlzz2.json';
   static const String iconsOutputOnlinegiftools = 'assets/icons/output-onlinegiftools.gif';
 
 }

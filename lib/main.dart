@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled2/control/providers/apps_handler_provider.dart';
 import 'package:untitled2/control/providers/database_provider.dart';
+import 'package:untitled2/view/homeScreen/home_screen_view.dart';
 import 'package:untitled2/view/splashScreen/splash_screen_view.dart';
 
 void main() async {
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=> DataBaseProvider()),
+        ChangeNotifierProvider(create: (_)=> AppsHandlerProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'playfair',
         ),
-        home: SplashScreenView(),
+        home: HomeScreenView(),
       ),
     );
   }
